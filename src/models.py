@@ -28,9 +28,17 @@ class CompanyInfo(BaseModel):
     developer_experience_rating: Optional[str] = None  # Poor, Good, Excellent
 
 
+
 class ResearchState(BaseModel):
+    """Enhanced state with metadata tracking."""
     query: str
-    extracted_tools: List[str] = []  # Tools extracted from articles
-    companies: List[CompanyInfo] = []
-    search_results: List[Dict[str, Any]] = []
-    analysis: Optional[str] = None
+    extracted_tools: List[str] = Field(default_factory=list)
+    companies: List[CompanyInfo] = Field(default_factory=list)
+    aggregated_companies: List[CompanyInfo] = Field(default_factory=list)
+    analysis: str = ""
+    
+    # Metadata for observability
+    extraction_metadata: Dict[str, Any] = Field(default_factory=dict)
+    research_metadata: Dict[str, Any] = Field(default_factory=dict)
+    aggregation_metadata: Dict[str, Any] = Field(default_factory=dict)
+    synthesis_metadata: Dict[str, Any] = Field(default_factory=dict)
